@@ -1,48 +1,50 @@
 import React, { useState } from "react";
-import data from "./data";
+import SingleColor from "./SingleHex";
+import Values from "values.js";
+
 const App = () => {
-  const [count, setCount] = useState(0);
-  const [text, setText] = useState([]);
-  const hanleSubmit = (e) => {
+  const [color, setColor] = useState("");
+  const [error, setError] = useState(false);
+  const [list, setList] = useState(new Values("#f15025").all(10));
+
+  const handleSubmit = (e) => {
     e.preventDefault();
-    let amount = parseInt(count);
-    if (count <= 0) {
-      amount = 1;
+    try {
+      let colors = new Values(color).all(amountColor);
+      // console.log(colors);
+      setList(colors);
+    } catch (error) {
+      setError(true);
+      console.log(error);
     }
-
-    if (count > 8) {
-      amount = 8;
-    }
-    setText(data.slice(0, amount));
   };
-  return (
-    <section className="section-center">
-      <h3>tired of boring lorem ipsum?</h3>
-      <form className="lorem-form" onSubmit={hanleSubmit}>
-        <label htmlFor="amount">paragraphs:</label>
-        <input
-          type="number"
-          name="amount"
-          min={0}
-          id="amount"
-          value={count}
-          onChange={(e) => setCount(e.target.value)}
-        />
-        <button type="submit" className="btn">
-          generate
-        </button>
-      </form>
 
-      <article className="lorem">
-        {text.map((item, index) => {
+  return (
+    <>
+      <section className="container">
+        <h3>Color Generator</h3>
+        <form onSubmit={handleSubmit}>
+          <input
+            type="text"
+            onChange={(e) => setColor(e.target.value)}
+            value={color}
+            placeholder="#f15025"
+            className={`${error ? "error" : null}`}
+          />
+          <button type="submit" className="btn">
+            submit
+          </button>
+        </form>
+      </section>
+      <section className="colors">
+        <h4>List goes here</h4>
+        {list.map((item, index) => {
           return (
-            <p key={index} className="">
-              {item}
-            </p>
+            <SingleColor hex={item.hex} {...item} key={index} index={index} />
           );
         })}
-      </article>
-    </section>
+      </section>
+    </>
   );
 };
 
