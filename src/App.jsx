@@ -1,69 +1,49 @@
-import React, { useEffect, useState } from "react";
-import { FiChevronRight, FiChevronLeft } from "react-icons/fi";
-import { FaQuoteRight } from "react-icons/fa";
+import React, { useState } from "react";
 import data from "./data";
-function App() {
-  const [people, setPeople] = useState(data);
-  const [index, setIndex] = useState(0);
-
-  useEffect(() => {
-    const lastIndex = people.length - 1;
-    if (index < 0) {
-      setIndex(lastIndex);
+const App = () => {
+  const [count, setCount] = useState(0);
+  const [text, setText] = useState([]);
+  const hanleSubmit = (e) => {
+    e.preventDefault();
+    let amount = parseInt(count);
+    if (count <= 0) {
+      amount = 1;
     }
 
-    if (index > lastIndex) {
-      setIndex(0);
+    if (count > 8) {
+      amount = 8;
     }
-  }, [index, people]);
-
-  useEffect(() => {
-    let intervalId = setInterval(() => {
-      setIndex(index + 1);
-    }, 3000);
-    return () => clearInterval(intervalId);
-  }, [index]);
-
+    setText(data.slice(0, amount));
+  };
   return (
-    <section className="section">
-      <div className="title">
-        <h2>
-          <span>/</span>reviews
-        </h2>
-      </div>
-      <div className="section-center">
-        {people.map((person, personIndex) => {
-          const { id, name, image, title, quote } = person;
-          let position = "nextSlide";
-          if (personIndex === index) {
-            position = "activeSlide";
-          }
+    <section className="section-center">
+      <h3>tired of boring lorem ipsum?</h3>
+      <form className="lorem-form" onSubmit={hanleSubmit}>
+        <label htmlFor="amount">paragraphs:</label>
+        <input
+          type="number"
+          name="amount"
+          min={0}
+          id="amount"
+          value={count}
+          onChange={(e) => setCount(e.target.value)}
+        />
+        <button type="submit" className="btn">
+          generate
+        </button>
+      </form>
 
-          if (
-            personIndex === index - 1 ||
-            (index === 0 && personIndex === people.length - 1)
-          ) {
-            position = "lastSlide";
-          }
+      <article className="lorem">
+        {text.map((item, index) => {
           return (
-            <article key={id} className={position}>
-              <img src={image} alt={name} className="person-img" />
-              <h4>{name}</h4>
-              <p className="title">{title}</p>
-              <p className="text">{quote}</p>
-              <FaQuoteRight className="icon" />
-            </article>
+            <p key={index} className="">
+              {item}
+            </p>
           );
         })}
-        <button className="prev" onClick={() => setIndex(index - 1)}>
-          <FiChevronLeft />
-        </button>
-        <button className="next" onClick={() => setIndex(index + 1)}>
-          <FiChevronRight />
-        </button>
-      </div>
+      </article>
     </section>
   );
-}
+};
 
 export default App;
