@@ -1,35 +1,69 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
-
+import React, { useEffect, useState } from "react";
+import { FiChevronRight, FiChevronLeft } from "react-icons/fi";
+import { FaQuoteRight } from "react-icons/fa";
+import data from "./data";
 function App() {
-  const [count, setCount] = useState(0)
+  const [people, setPeople] = useState(data);
+  const [index, setIndex] = useState(0);
+
+  useEffect(() => {
+    const lastIndex = people.length - 1;
+    if (index < 0) {
+      setIndex(lastIndex);
+    }
+
+    if (index > lastIndex) {
+      setIndex(0);
+    }
+  }, [index, people]);
+
+  useEffect(() => {
+    let intervalId = setInterval(() => {
+      setIndex(index + 1);
+    }, 3000);
+    return () => clearInterval(intervalId);
+  }, [index]);
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <section className="section">
+      <div className="title">
+        <h2>
+          <span>/</span>reviews
+        </h2>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
+      <div className="section-center">
+        {people.map((person, personIndex) => {
+          const { id, name, image, title, quote } = person;
+          let position = "nextSlide";
+          if (personIndex === index) {
+            position = "activeSlide";
+          }
+
+          if (
+            personIndex === index - 1 ||
+            (index === 0 && personIndex === people.length - 1)
+          ) {
+            position = "lastSlide";
+          }
+          return (
+            <article key={id} className={position}>
+              <img src={image} alt={name} className="person-img" />
+              <h4>{name}</h4>
+              <p className="title">{title}</p>
+              <p className="text">{quote}</p>
+              <FaQuoteRight className="icon" />
+            </article>
+          );
+        })}
+        <button className="prev" onClick={() => setIndex(index - 1)}>
+          <FiChevronLeft />
         </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
+        <button className="next" onClick={() => setIndex(index + 1)}>
+          <FiChevronRight />
+        </button>
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    </section>
+  );
 }
 
-export default App
+export default App;
