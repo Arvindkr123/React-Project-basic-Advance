@@ -1,9 +1,13 @@
 import React from "react";
-import Navbar from "./Navbar";
+import { Home, Modal, Sidebar } from "./components";
+
+
 function App() {
   return (
     <>
-      <Navbar />
+      <Home />
+      <Modal />
+      <Sidebar />
     </>
   );
 }
