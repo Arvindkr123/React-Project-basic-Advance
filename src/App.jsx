@@ -1,14 +1,11 @@
 import React from "react";
-import { Home, Modal, Sidebar } from "./components";
-
+import LowerState from "./perfomance/01-lower-state";
 
 function App() {
   return (
-    <>
-      <Home />
-      <Modal />
-      <Sidebar />
-    </>
+    <div className="container">
+      <LowerState />
+    </div>
   );
 }
 
