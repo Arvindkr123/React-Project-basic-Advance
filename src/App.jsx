@@ -4,7 +4,7 @@ import LatestReact from "./perfomance/04/React-18";
 function App() {
   return (
     <div className="container">
-      <LatestReact/>
+      <LatestReact />
     </div>
   );
 }
