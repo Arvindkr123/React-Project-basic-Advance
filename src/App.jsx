@@ -1,10 +1,10 @@
 import React from "react";
-import LowerState from "./perfomance/01-lower-state";
+import LowerStateChallenge from "./perfomance/02-lower-state-challenge";
 
 function App() {
   return (
     <div className="container">
-      <LowerState />
+      <LowerStateChallenge/>
     </div>
   );
 }
