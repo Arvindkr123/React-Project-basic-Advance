@@ -1,15 +1,9 @@
-import React from "react";
-import { Home, Modal, Sidebar } from "./components";
+import React from 'react'
 
-
-function App() {
+const App = () => {
   return (
-    <>
-      <Home />
-      <Modal />
-      <Sidebar />
-    </>
-  );
+    <div>App</div>
+  )
 }
 
-export default App;
+export default App
