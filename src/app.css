@@ -1,0 +1,20 @@
+.app {
+  display: flex;
+}
+.button-container {
+  flex: 0;
+  padding: 0px 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: #eab676;
+}
+
+.button-container .left-btn {
+  padding: 5px;
+  text-align: center;
+  margin: 10px;
+  border-radius: 6px;
+  
+}

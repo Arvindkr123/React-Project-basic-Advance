@@ -1,37 +1,23 @@
-import React, { useEffect } from "react";
-import Navbar from "./components/Navbar";
-import CardContainer from "./components/CardContainer";
-import { useDispatch, useSelector } from "react-redux";
-import { calCulateTotals, getCartItems } from "./feature/cart/cartSlice";
-import Modal from "./components/Modal";
+import React from "react";
+import Header from "./components/Header";
+import Details from "./components/Details";
+import "./app.css"
 
-function App() {
-  const { cartItems, isLoading } = useSelector((state) => state.cart);
-  const { isOpen } = useSelector((state) => state.modal);
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(calCulateTotals());
-  }, [cartItems]);
-
-  useEffect(() => {
-    dispatch(getCartItems());
-  }, []);
-
-  if (isLoading) {
-    return (
-      <div className="loading">
-        <h1>Loading...</h1>
-      </div>
-    );
-  }
-
+const App = () => {
   return (
-    <main>
-      {isOpen && <Modal />}
-      <Navbar />
-      <CardContainer />
-    </main>
+    <div className="app">
+      <div style={{ flex: 1 }}>
+        <Header />
+        <Details />
+      </div>
+      <div className="button-container">
+        <button className="left-btn">New</button>
+        <button className="left-btn">Insert</button>
+        <button className="left-btn">Save</button>
+        <button className="left-btn">Print</button>
+      </div>
+    </div>
   );
-}
+};
 
 export default App;
